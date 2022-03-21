@@ -27,5 +27,6 @@ class Player(models.Model):
     finalGame=models.DateTimeField(auto_now_add=True)
     retroID=models.CharField(max_length=10)
     bbrefID=models.CharField(max_length=10)
+    
     def __str__(self):
         return self.nameLast
