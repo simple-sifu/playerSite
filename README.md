@@ -53,7 +53,7 @@ Load a public dataset from into a SQLite database and build a RESTful API interf
 
   > Setting up admin
   > 1. python manage.py createsuperuser
-  > 2. provide user/password admin
+  > 2. provide user/password admin/admin
 
   > 1. I have included postman collections in the postman folder under the base dir
   > 2. API endpoints can also be tested using Swagger document, make sure django application is running.
