@@ -31,7 +31,7 @@ class Command(BaseCommand):
                     continue
 
                 try:
-                    player, created = player.objects.update_or_create(
+                    player, created = Player.objects.update_or_create(
                             playerID=row[PlayerColumns.PLAYER_ID],
                             birthYear=row[PlayerColumns.BIRTH_YEAR],
                             birthMonth=row[PlayerColumns.BIRTH_MONTH],

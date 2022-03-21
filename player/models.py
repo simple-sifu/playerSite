@@ -3,16 +3,16 @@ from django.db import models
 from django.utils import timezone
 
 class Player(models.Model):
-    playerID=models.IntegerField("Player ID", primary_key=True, db_index=True)
+    playerID=models.CharField("Player ID", primary_key=True, db_index=True, max_length=20)
     birthYear=models.IntegerField()
     birthMonth=models.IntegerField()
     birthDay=models.IntegerField()
     birthCountry=models.CharField(max_length=50)
     birthState=models.CharField(max_length=50)
     birthCity=models.CharField(max_length=50)
-    deathYear=models.IntegerField()
-    deathMonth=models.IntegerField()
-    deathDay=models.IntegerField()
+    deathYear=models.CharField(max_length=10)
+    deathMonth=models.CharField(max_length=10)
+    deathDay=models.CharField(max_length=10)
     deathCountry=models.CharField(max_length=50)
     deathState=models.CharField(max_length=50)
     deathCity=models.CharField(max_length=50)
@@ -23,8 +23,8 @@ class Player(models.Model):
     height=models.IntegerField()
     bats=models.CharField(max_length=2)
     throws=models.CharField(max_length=2)
-    debut=models.DateTimeField(auto_now_add=True)
-    finalGame=models.DateTimeField(auto_now_add=True)
+    debut=models.CharField(max_length=10)
+    finalGame=models.CharField(max_length=10)
     retroID=models.CharField(max_length=10)
     bbrefID=models.CharField(max_length=10)
     
