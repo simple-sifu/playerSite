@@ -8,22 +8,15 @@ Load a public dataset from into a SQLite database and build a RESTful API interf
 
 #### Requested tasks:
 - [x] For the dataset above, download the data in an appropriate dataset file and evaluate the contents
-   > Actually I was initially overwhelmed with all that data, but I didnt need to worry, becoz you told me I needed 2 FK(s) for desc and loc. This is all the info I needed to design the tables.
-- [x] Create a Django app to serve information about the facilities
+- [x] Create a Django app to serve information about each player
 - Create models in a SQLite database to hold the data with the following conditions:
-  - [x] Description information should be in its own table with a FK relationship
-  - [x] Address/location information should be stored in its own table with FK relationship
 - [x] Write a management command or migration to load the data from the dataset file into the database using the models
 - Create REST-ful endpoints via Django REST Framework which provide the following:
   - [x] Detail page for a facility with all data
-    - [x] Ability to CRUD facilities using the above endpoints
-  - [x] An end-point which accepts a “description” or “short description” and returns only facilities that match 
 - [x] Please try to write all API end-points to be as performant as possible while still using the Django ORM
  > 1. using select_related, prefetch_related for joining querysets to avoid issues with nested serializers where
  extra hits to database might inadvertently occur.
- > 2. cache - We dont want to use middleware caching for now, because our list api would only change when cache is refreshed.
- > 3. index - added db_index to facilities primary key and to foreign key of description and location tables. I did some
- initial tests and it actually seems slower....not sure if using a real database would make a difference. Will need to investigate.
+
  > 4. performance monitoring - Overrided dispatch method to count number of hits to db to confirm. This shows up on django server output under ***** # of Queries: 3 *********
  > 5. performance monitoring - django-debug-toolbar will show up on the right side of browser and even show you sql queries executed
 
@@ -41,10 +34,22 @@ Load a public dataset from into a SQLite database and build a RESTful API interf
 
   > Place the CVS input file in data directory located in baseDir of application.
 
-  > 0. Remove all files like sqlite, migrations, etc.
+  > 0. delete db.sqlite3, player/migrations/0001_initial.py because player table uses primary key.
   > 1. python manage.py makemigrations
   > 2. python manage.py migrate --run-syncdb
   > 3. python manage.py uploadcsv --filename PlayerData.csv
+  
+  > Read the data
+  > 1. python manage.py shell
+      Python 3.9.9 (main, Nov 21 2021, 03:23:42) 
+      [Clang 13.0.0 (clang-1300.0.29.3)] on darwin
+      Type "help", "copyright", "credits" or "license" for more information.
+      (InteractiveConsole)
+  > 2. >>> from player.models import Player
+  > 3. >>> Player.objects.all()
+  > 4. >>> p = Player.objects.get(pk="abadijo01")
+  > 5. >>> p.playerID
+  > 6. >>> p.birthYear
 
   > 1. I have included postman collections in the postman folder under the base dir
   > 2. API endpoints can also be tested using Swagger document, make sure django application is running.
@@ -58,8 +63,6 @@ Load a public dataset from into a SQLite database and build a RESTful API interf
 - A document in which you describe the following:
   - [x] What assumptions you made, and how those assumptions might affect the project.
 
-   > 1. After noticing that facilities code was **not unique** contrary to my initial guess, I made the
-   > assumption that the csv contains not only initial records but updates that occurred later down the file.
    > I begrudgingly created records using update_or_create option. I also added warning prompt for user that they were reloading on top of existing data, since a reload would wipe out any manual updates.
 
    > 2. Versioned the url **api/v1/facilties** for possible future version changes.
@@ -94,13 +97,6 @@ Load a public dataset from into a SQLite database and build a RESTful API interf
   > Finally figured out I needed a many=True kwargs to make it work. Also doing create/update 
   > in serialization with nested data required some thought.
 
-  >  2. If I hit an issue or didnt know what to do, just focused on getting the immediate situation resolved 
-  > first. Even though I have not touched Django in a year since I was doing more JS, I still knew what my viewsets
-  > and serializers should look like.  I also love Python/Django as much as React because they make your life 
-  > easier than when you use Java which I used
-  > for many years but got tired of using because of its verboseness and massive OOP nature of many production 
-  > applications. I actually remembered when my hands would hurt coding in Java. With Django/Python/React/JS, I spend
-  > more time reading about the best practice and it always ends up being less code and prettier.
 
 
 

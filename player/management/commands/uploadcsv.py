@@ -26,11 +26,15 @@ class Command(BaseCommand):
         with open(csvfile, 'rt') as file:
             rows = csv.reader(file, delimiter=",", quotechar='"')
             for row in rows:
-
+                
                 if rows.line_num == 1:
                     continue
-
                 try:
+                    self.stdout.write("insert row with playerId: "+ row[PlayerColumns.PLAYER_ID])
+                    # Todo:
+                    # Some of the Integer/Date Fields are empty strings. 
+                    # Requirements dont specify substitute values for empty values, so
+                    # temporarily define everything has charField.
                     player, created = Player.objects.update_or_create(
                             playerID=row[PlayerColumns.PLAYER_ID],
                             birthYear=row[PlayerColumns.BIRTH_YEAR],
@@ -59,9 +63,8 @@ class Command(BaseCommand):
                     )
 
                     row_count = rows.line_num
-
                 except IntegrityError as e:
-                    self.stdout.write("ErrorMessage: "+str(e))
+                    self.stdout.write("ErrorMessage1: "+str(e))
                     return
 
             self.stdout.write(" - Loaded " + str(row_count) + " rows into Player Table")

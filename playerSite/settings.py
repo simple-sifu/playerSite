@@ -70,6 +70,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'playerSite.wsgi.application'
 
+USE_TZ = True
+TIME_ZONE = 'Europe/Paris'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
